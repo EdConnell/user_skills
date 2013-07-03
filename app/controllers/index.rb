@@ -57,10 +57,29 @@ post '/users' do
   end
 end
 
-get '/users/:id/profile'
-  if params[:id] == session[:user_id]
+get '/user/:id/profile' do
+  if params[:id].to_i == session[:user_id]
     @user = User.find(params[:id])
     erb :profile
+  else
+    redirect '/'
+  end
+end
+
+get '/user/:id/addskill' do
+  erb :addskill
+end
+
+post '/user/:id/addskill' do
+  if params[:id].to_i == session[:user_id]
+    @user = User.find(params[:id])
+    SkillLevel.create({
+                       skill_id: params[:skill][:id],
+                       user_id: @user.id,
+                       years_of_training: params[:skill][:years],
+                       formal: params[:skill][:formal]
+                       })
+    redirect "/user/#{@user.id}/profile"
   else
     redirect '/'
   end
