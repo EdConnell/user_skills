@@ -18,4 +18,9 @@ design_skills.each do |skill|
   Skill.create :name => skill, :context => 'creative'
 end
 
-# TODO: create associations between users and skills
+skill_training = (1..7).to_a
+skill_is_formal = [true, false]
+
+6.times do |user|
+  SkillLevel.create({user_id: (user + 1), skill_id: skill_training.sample, years_of_training: skill_training.sample, formal: skill_is_formal.sample})
+end

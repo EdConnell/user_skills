@@ -56,3 +56,12 @@ post '/users' do
     erb :sign_up
   end
 end
+
+get '/users/:id/profile'
+  if params[:id] == session[:user_id]
+    @user = User.find(params[:id])
+    erb :profile
+  else
+    redirect '/'
+  end
+end
